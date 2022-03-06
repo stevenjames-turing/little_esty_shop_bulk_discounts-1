@@ -23,6 +23,6 @@ class Invoice < ApplicationRecord
         revenue += (ii.unit_price * ii.quantity)
       end
     end
-    revenue
+    revenue.round(2)
   end
 end
