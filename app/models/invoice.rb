@@ -20,7 +20,7 @@ class Invoice < ApplicationRecord
       if ii.best_discount[0] != nil 
         revenue += (((1 - ii.best_discount[0].discount) * ii.unit_price) * ii.quantity)
       else
-        reveunue += (ii.unit_price * ii.quantity)
+        revenue += (ii.unit_price * ii.quantity)
       end
     end
     revenue

@@ -49,13 +49,11 @@ RSpec.describe 'merchant bulk discount edit' do
     visit edit_merchant_bulk_discount_path(@merchant1, @bd1)
   end
 
-  xit 'current attributes are pre-populated on form' do 
-    within "#bulk_discount_discount" do 
-      expect(page).to have_content("0.15")
-    end
-    
-    expect(page).to have_content(10)
+  it 'current attributes are pre-populated on form' do 
+    expect(page).to have_field("Discount", with: @bd1.discount)    
+    expect(page).to have_field("Threshold", with: @bd1.threshold)    
   end
+
   it 'will save new info and use prior attribute if not updated on form' do 
     fill_in "Discount", with: 0.21
     click_button "Submit"
