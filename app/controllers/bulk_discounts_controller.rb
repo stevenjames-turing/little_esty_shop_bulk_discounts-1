@@ -13,10 +13,15 @@ class BulkDiscountsController < ApplicationController
   end
 
   def create
-    BulkDiscount.create!(discount: params[:discount], 
+    discount = BulkDiscount.new(discount: params[:discount], 
                         threshold: params[:threshold], 
                         merchant: @merchant)
-    redirect_to merchant_bulk_discounts_path(@merchant)
+    if discount.save 
+      redirect_to merchant_bulk_discounts_path(@merchant)
+    else
+      redirect_to new_merchant_bulk_discount_path(@merchant)
+      flash.notice = "Ya gotta do better than that..."
+    end
   end
 
   def edit 
