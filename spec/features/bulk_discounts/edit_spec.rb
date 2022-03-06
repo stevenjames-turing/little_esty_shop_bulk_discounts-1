@@ -56,6 +56,16 @@ RSpec.describe 'merchant bulk discount edit' do
     
     expect(page).to have_content(10)
   end
+  it 'will save new info and use prior attribute if not updated on form' do 
+    fill_in "Discount", with: 0.21
+    click_button "Submit"
+  
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bd1))
+  
+    expect(page).to have_content("Discount Amount: 21% off")
+    expect(page).to have_content("Minimum Item Quantity: 10 items") 
+  end
+  
   it 'redirects to discount show page when form submit' do
     fill_in "Discount", with: 0.21
     fill_in "Threshold", with: 21
