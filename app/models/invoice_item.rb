@@ -18,12 +18,8 @@ class InvoiceItem < ApplicationRecord
   def best_discount
     InvoiceItem.joins(item: [merchant: :bulk_discounts])
     .where("invoice_items.quantity >= bulk_discounts.threshold and items.id = #{item_id}")
-    .select("items.*, invoice_items.*, bulk_discounts.*")
-    .maximum("bulk_discounts.discount")
-    # Invoice.joins(invoice_items: [item: [merchant: :bulk_discounts]])
-    # .where("invoice_items.quantity >= bulk_discounts.threshold and items.id = #{item_id}")
-    # .select("items.*, invoice_items.*, bulk_discounts.*")
-    # .order("bulk_discounts.discount desc")
-    # .limit(1)
+    .select("bulk_discounts.discount, bulk_discounts.id")
+    .order("bulk_discounts.discount desc")
+    .limit(1)
   end
 end
