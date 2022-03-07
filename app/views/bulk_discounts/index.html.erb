@@ -11,10 +11,14 @@
     <% @bulk_discounts.each do |bd| %>
       <li>
       <div id="discount-<%=bd.id%>">
+      <% if bd.name != nil %>
+        <b><%= bd.name %>: </b>
+      <% end %>
       <%= "#{(bd.discount * 100).round}% off" %>
       <%= "#{bd.threshold} items or more - " %>
       <%= link_to "View Discount", merchant_bulk_discount_path(@merchant, bd)  %> -
-      <%= button_to("Delete Discount", merchant_bulk_discount_path(@merchant, bd), method: :delete)%>      </div>
+      <%= button_to("Delete Discount", merchant_bulk_discount_path(@merchant, bd), method: :delete)%>      
+      </div>
       </li>
     <% end  %>
     </ul>
@@ -33,6 +37,7 @@
       <b>
       <%= holiday[:name] %>
       </b>
+      <%= button_to "Create Holiday Discount", new_merchant_bulk_discount_path(@merchant), :method => :get, params: {name: "#{holiday[:name]}", discount: 0.30, threshold: 2} %>
       </li>
     <% end %>
     </ol>
