@@ -1,7 +1,16 @@
-<%= form_with model: model, method: method, url: url, class: 'merchant_bulk_discount_form', local: true do |f| %>
-  <%= f.label :discount %>
-  <%= f.number_field :discount, step: 0.01 %><br/><br/>
-  <%= f.label :threshold %>
-  <%= f.number_field :threshold %><br/><br/>
+<%= form_with model: model, method: method, url: url, class: 'merchant_bulk_discount_form', local: true, params: params do |f| %>
+  <% if params[:name] != nil %>
+    <%= f.label "Name (Optional)" %>
+    <%= f.text_field :name, value: "#{params[:name]} Discount"  %><br/><br/>
+    <%= f.label :discount %>
+    <%= f.number_field :discount, step: 0.01, value: params[:discount] %><br/><br/>
+    <%= f.label :threshold %>
+    <%= f.number_field :threshold, value: params[:threshold] %><br/><br/>
+  <% else %>
+    <%= f.label :discount %>
+    <%= f.number_field :discount, step: 0.01 %><br/><br/>
+    <%= f.label :threshold %>
+    <%= f.number_field :threshold %><br/><br/>
+  <% end %>
   <%= f.submit 'Submit'%>
 <% end %>
