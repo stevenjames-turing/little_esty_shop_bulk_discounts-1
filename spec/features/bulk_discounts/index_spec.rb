@@ -141,4 +141,47 @@ RSpec.describe 'merchant bulk discount index' do
       end
     end
   end
+
+  describe 'holiday discounts' do 
+    it 'has a Create Discount button next to each holiday' do
+      within '#holidays' do
+        expect(page).to have_button("Create Holiday Discount", count: 3)
+      end 
+    end
+    it 'clicking button takes me to new form with holiday discount info pre-filled' do 
+      api = HolidayApi.new
+      holiday1 = api.upcoming_holidays(1)[0]
+
+      first(:button, "Create Holiday Discount").click
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+      expect(page).to have_field(:name, with: "#{holiday1[:name]} Discount")    
+      expect(page).to have_field(:discount, with: 0.30)    
+      expect(page).to have_field(:threshold, with: 2)      
+    end
+    it 'can leave the information as is for submittion' do 
+      api = HolidayApi.new
+      holiday1 = api.upcoming_holidays(1)[0]
+      first(:button, "Create Holiday Discount").click
+      expect(page).to have_field(:name, with: "#{holiday1[:name]} Discount")    
+      expect(page).to have_field(:discount, with: 0.30)    
+      expect(page).to have_field(:threshold, with: 2)
+      click_button "Submit"
+
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+
+      expect(page).to have_content("#{holiday1[:name]} Discount: 30% off 2 items or more")
+    end
+    it 'can change the pre-filled info before submittion' do 
+      api = HolidayApi.new
+      holiday1 = api.upcoming_holidays(1)[0]
+      first(:button, "Create Holiday Discount").click
+      fill_in "Discount", with: 0.21
+      fill_in "Threshold", with: 12
+      click_button "Submit"
+
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+
+      expect(page).to have_content("#{holiday1[:name]} Discount: 21% off 12 items or more")
+    end
+  end
 end 
