@@ -30,14 +30,18 @@
 
   <div id='holidays'>
     <ol>
-    <% api = HolidayApi.new %>
-    <% api.upcoming_holidays(3).each do |holiday| %>    
+    <% api = HolidayApi.new.get_holidays %>
+    <% Holiday.upcoming_holidays(3).each do |holiday| %>    
       <li>
       <%= holiday[:date] %> - 
       <b>
       <%= holiday[:name] %>
       </b>
-      <%= button_to "Create Holiday Discount", new_merchant_bulk_discount_path(@merchant), :method => :get, params: {name: "#{holiday[:name]}", discount: 0.30, threshold: 2} %>
+      <% if holiday.discounts.count >= 1 %>
+        <%= link_to "View Discount", merchant_bulk_discount_path(@merchant, holiday.discounts[0])  %>
+      <% else  %>
+        <%= button_to "Create Holiday Discount", new_merchant_bulk_discount_path(@merchant), :method => :get, params: {name: "#{holiday[:name]}", date: holiday[:date], discount: 0.30, threshold: 2} %>
+      <% end %>
       </li>
     <% end %>
     </ol>

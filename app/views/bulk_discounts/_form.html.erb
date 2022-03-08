@@ -1,5 +1,6 @@
 <%= form_with model: model, method: method, url: url, class: 'merchant_bulk_discount_form', local: true, params: params do |f| %>
   <% if params[:name] != nil %>
+    <%= f.hidden_field :date, value: params[:date] %>
     <%= f.label "Name (Optional)" %>
     <%= f.text_field :name, value: "#{params[:name]} Discount"  %><br/><br/>
     <%= f.label :discount %>

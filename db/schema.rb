@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_07_201230) do
+ActiveRecord::Schema.define(version: 2022_03_07_232833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2022_03_07_201230) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.bigint "holiday_id"
+    t.index ["holiday_id"], name: "index_bulk_discounts_on_holiday_id"
     t.index ["merchant_id"], name: "index_bulk_discounts_on_merchant_id"
   end
 
@@ -34,6 +36,13 @@ ActiveRecord::Schema.define(version: 2022_03_07_201230) do
     t.string "city"
     t.string "state"
     t.bigint "zip"
+  end
+
+  create_table "holidays", force: :cascade do |t|
+    t.string "name"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "invoice_items", force: :cascade do |t|
@@ -84,6 +93,7 @@ ActiveRecord::Schema.define(version: 2022_03_07_201230) do
     t.index ["invoice_id"], name: "index_transactions_on_invoice_id"
   end
 
+  add_foreign_key "bulk_discounts", "holidays"
   add_foreign_key "bulk_discounts", "merchants"
   add_foreign_key "invoice_items", "invoices"
   add_foreign_key "invoice_items", "items"

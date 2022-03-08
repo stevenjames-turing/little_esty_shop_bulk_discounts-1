@@ -90,6 +90,7 @@ end
 
 desc 'destroy the tables'
 task destroy_all: :environment do
+  Holiday.destroy_all
   BulkDiscount.destroy_all
   InvoiceItem.destroy_all
   Item.destroy_all

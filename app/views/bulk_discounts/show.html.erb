@@ -8,11 +8,19 @@
 
   <div id='discount'>
     <ul>
+      <% if @bd.name != nil %>
+        <li>
+        <b>Name: </b>
+        <%= @bd.name %>
+      </li>
+      <% end %>
       <li>
-      <%= "Discount Amount: #{(@bd.discount * 100).round}% off" %>
+      <b>Discount Amount: </b>
+      <%= "#{(@bd.discount * 100).round}% off" %>
       </li>
       <li>
-      <%= "Minimum Item Quantity: #{@bd.threshold} items" %>
+      <b>Minimum Item Quantity: </b>
+      <%= "#{@bd.threshold} items" %>
       </li>
     </ul>
   </div>
