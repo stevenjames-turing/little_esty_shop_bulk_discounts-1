@@ -37,7 +37,7 @@
       <b>
       <%= holiday[:name] %>
       </b>
-      <%= button_to "Create Holiday Discount", new_merchant_bulk_discount_path(@merchant), :method => :get, params: {name: "#{holiday[:name]}", discount: 0.30, threshold: 2} %>
+      <%= button_to "Create Holiday Discount", new_merchant_bulk_discount_path(@merchant), :method => :get, params: {name: "#{holiday[:name]}", date: holiday[:date], discount: 0.30, threshold: 2} %>
       </li>
     <% end %>
     </ol>
