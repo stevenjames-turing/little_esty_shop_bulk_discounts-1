@@ -63,6 +63,16 @@ RSpec.describe 'merchant bulk discount edit' do
     expect(page).to have_content("Discount Amount: 21% off")
     expect(page).to have_content("Minimum Item Quantity: 10 items") 
   end
+
+  it 'will flash an error message if discount or threshold fields are blank' do 
+    fill_in "Discount", with: 0.21
+    fill_in "Threshold", with: ""
+    click_button "Submit"
+  
+    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @bd1))
+  
+    expect(page).to have_content("Ya gotta do better than that...")
+  end
   
   it 'redirects to discount show page when form submit' do
     fill_in "Discount", with: 0.21
