@@ -8,6 +8,5 @@ describe BulkDiscount do
   end
   describe 'relationships' do 
     it { should belong_to :merchant }
-
   end
 end
