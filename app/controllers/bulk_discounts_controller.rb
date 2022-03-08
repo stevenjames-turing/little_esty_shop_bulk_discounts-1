@@ -13,10 +13,19 @@ class BulkDiscountsController < ApplicationController
   end
 
   def create
-    discount = BulkDiscount.new(discount: params[:discount], 
+    holiday = Holiday.where(date: params[:date])
+    if holiday.count == 1
+      discount = BulkDiscount.new(discount: params[:discount], 
+                          threshold: params[:threshold], 
+                          name: params[:name], 
+                          merchant: @merchant, 
+                          holiday_id: holiday[0][:id])
+    else
+      discount = BulkDiscount.new(discount: params[:discount], 
                         threshold: params[:threshold], 
                         name: params[:name], 
                         merchant: @merchant)
+    end
     if discount.save 
       redirect_to merchant_bulk_discounts_path(@merchant)
     else

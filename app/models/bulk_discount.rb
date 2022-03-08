@@ -4,4 +4,5 @@ class BulkDiscount < ApplicationRecord
   validates_numericality_of :threshold
   
   belongs_to :merchant
+  has_one :holiday
 end
