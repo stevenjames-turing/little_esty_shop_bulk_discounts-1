@@ -83,15 +83,15 @@ task :import, [:bulk_discounts] => :environment do
   #   BulkDiscount.create!(row.to_hash)
   # end
   200.times do 
-    Merchant.all.sample.bulk_discounts.create(discount: (rand(5..30)).fdiv(100), threshold: rand(5..30))
+    Merchant.all.sample.bulk_discounts.create(discount: (rand(5..30)).fdiv(100), threshold: rand(2..10))
   end
   ActiveRecord::Base.connection.reset_pk_sequence!('bulk_discounts')
 end
 
 desc 'destroy the tables'
 task destroy_all: :environment do
-  Holiday.destroy_all
   BulkDiscount.destroy_all
+  Holiday.destroy_all
   InvoiceItem.destroy_all
   Item.destroy_all
   Merchant.destroy_all
