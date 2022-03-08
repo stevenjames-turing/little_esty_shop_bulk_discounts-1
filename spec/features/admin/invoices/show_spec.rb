@@ -51,10 +51,6 @@ describe 'Admin Invoices Index Page' do
 
     expect(page).to have_content(@ii_1.status)
     expect(page).to have_content(@ii_2.status)
-
-    expect(page).to_not have_content(@ii_3.quantity)
-    expect(page).to_not have_content("$#{@ii_3.unit_price}")
-    expect(page).to_not have_content(@ii_3.status)
   end
 
   it 'should display the total revenue the invoice will generate' do
