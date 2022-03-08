@@ -4,8 +4,7 @@ class HolidayApi
     Faraday.new(url: "https://date.nager.at")
   end
 
-  def upcoming_holidays(count)
-
+  def get_holidays
     resp = conn.get("api/v3/NextPublicHolidays/US")
     json = JSON.parse(resp.body, symbolize_names: true)
     json.each do |holiday|
@@ -15,6 +14,5 @@ class HolidayApi
                         date: holiday[:date])
       end
     end
-    json[0...count]
   end
-end
+end 
