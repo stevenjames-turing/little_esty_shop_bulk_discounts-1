@@ -31,5 +31,20 @@ RSpec.describe Holiday, type: :model do
     end
   end
 
- 
+  describe 'instance methods' do
+    describe '.discounts' do 
+      it 'returns all discounts associated to holiday object' do
+        api = HolidayApi.new.get_holidays
+        holiday1 = Holiday.all.first
+        holiday2 = Holiday.all.second
+        merchant1 = Merchant.create!(name: 'Arch City')
+        merchant2 = Merchant.create!(name: 'Apple')
+        bd1 = BulkDiscount.create!(discount: 0.20, threshold: 20, merchant_id: merchant1.id, holiday_id: holiday1.id)
+        bd2 = BulkDiscount.create!(discount: 0.10, threshold: 5, merchant_id: merchant1.id, holiday_id: holiday1.id)
+        bd3 = BulkDiscount.create!(discount: 0.25, threshold: 30, merchant_id: merchant2.id, holiday_id: holiday2.id)
+        expect(holiday1.discounts).to eq([bd1, bd2])
+        expect(holiday2.discounts).to eq([bd3])
+      end
+    end
+  end
 end 
